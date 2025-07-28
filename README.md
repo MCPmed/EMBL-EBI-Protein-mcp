@@ -1,173 +1,249 @@
-# EMBL-EBI-Protein-mcp
+# EMBL-EBI Protein MCP Server
 
-A Model Context Protocol (MCP) server for EMBL-EBI Protein database access
+> ⚠️ **UNDER CONSTRUCTION** ⚠️
+>
+> This project is currently under active development. While the core functionality is operational, please be aware that:
+> - **No guarantee is provided** that the software is bug-free
+> - Breaking changes may occur without notice
+> - Some features may be incomplete or experimental
+> - Use at your own risk in production environments
+>
+> Feedback and contributions are welcome as we work to improve the server!
 
-## Installation
+A Model Context Protocol (MCP) server providing access to the EMBL-EBI Protein database. This server enables LLMs and other MCP clients to search, retrieve, and analyze protein data from UniProt and related databases.
 
-Install the package in development mode:
+## 🚀 Quick Start
+
+### Installation
+
+**Requirements**: Python 3.10+ (due to MCP library requirements)
 
 ```bash
+# Create virtual environment with Python 3.10+
+python3.11 -m venv venv  
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+# Install the package
 pip install -e .
 ```
 
-Or install from PyPI (when available):
+### Running the MCP Server
 
 ```bash
-pip install EMBL-EBI-Protein-mcp
+# Start the MCP server
+embl_ebi_protein_mcp
 ```
 
-## Usage
+The server runs on stdio and is ready to accept MCP protocol requests.
 
+## 🧬 Features
 
-### Command Line Interface
+### 🆕 **New Enhanced Tools** (Recommended)
+- **`get_protein_summary`** ⭐ - One-stop comprehensive protein lookup (BEST STARTING POINT)
+- **`find_protein_accession`** 🔍 - Easy protein ID lookup for common names
 
-The package provides a `EMBL-EBI-Protein-mcp` command for usage:
+### 🔬 **Core Protein Tools**
+- **`search_proteins`** - Search UniProt protein database by text query
+- **`get_protein_by_accession`** - Get detailed protein information by UniProt accession
+- **`get_protein_interactions`** - Get known protein-protein interactions
+- **`get_protein_isoforms`** - Get alternative protein isoforms (splice variants)
 
-```bash
-# Get help
-EMBL-EBI-Protein-mcp --help
+### 🎯 **Protein Features & Analysis**
+- **`search_features`** - Search for specific protein sequence features
+- **`get_features_by_accession`** - Get all sequence features for a protein
+- **`get_features_by_type`** - Get features by specific type (domains, sites, etc.)
+- **`search_variations`** - Search natural variants in proteins
+- **`get_variations_by_accession`** - Get variations by UniProt accession
 
-# Run your main functionality
-EMBL-EBI-Protein-mcp <args>
+### 🌳 **Taxonomy & Classification**
+- **`get_taxonomy_by_id`** - Get taxonomic information by NCBI taxonomy ID
+- **`get_taxonomy_lineage`** - Get complete taxonomic lineage
+- **`get_taxonomy_children`** - Get taxonomy children by ID
+
+### 🔬 **Advanced Analysis**
+- **`search_proteomes`** - Search proteomes
+- **`get_proteome_by_upid`** - Get proteome by UniProt Proteome ID
+- **`search_coordinates`** - Search genomic coordinates
+- **`search_uniparc`** - Search UniParc entries
+
+**Total: 30 tools available**
+
+## 💡 Usage Examples
+
+### For LLMs (via MCP client)
+
+```javascript
+// Find human p53 protein - comprehensive overview
+{
+  "method": "tools/call",
+  "params": {
+    "name": "get_protein_summary",
+    "arguments": {
+      "gene_name": "p53",
+      "organism": "human"
+    }
+  }
+}
+
+// Find insulin in mouse
+{
+  "method": "tools/call", 
+  "params": {
+    "name": "find_protein_accession",
+    "arguments": {
+      "gene_name": "insulin",
+      "organism": "mouse"
+    }
+  }
+}
 ```
 
-
-
-### MCP Server
-
-The package provides an MCP server for integration with MCP-compatible clients:
-
-```bash
-# Run the MCP server
-EMBL-EBI-Protein-mcp-server
-```
-
-The MCP server provides the following tools:
-
-- **tool1**: Description of tool1
-- **tool2**: Description of tool2
-- **tool3**: Description of tool3
-
-
-### Python API
+### Python API Usage
 
 ```python
-from embl-ebi-protein-mcp.main import EMBLEBIProteinmcpBridge
+import asyncio
+from embl_ebi_protein_mcp.bridge import EMBLEBIBridge
 
-# Initialize the bridge
-bridge = EMBLEBIProteinmcpBridge()
+async def example():
+    async with EMBLEBIBridge() as bridge:
+        # Find protein accession
+        result = await bridge.find_protein_accession("p53", "human")
+        print(f"Found: {result[0]['accession']}")
+        
+        # Get comprehensive summary
+        summary = await bridge.get_protein_summary("insulin", "human")
+        print(f"Insulin accession: {summary['accession']}")
 
-# Use your functionality
-result = bridge.your_method()
+asyncio.run(example())
 ```
 
-## Features
+## 🗺️ Supported Organisms
 
-- **Feature 1**: Description of feature 1
-- **Feature 2**: Description of feature 2
-- **Feature 3**: Description of feature 3
+The server includes convenient organism name mapping:
 
-- **MCP Integration**: Full Model Context Protocol server implementation
+| Common Name | Taxonomy ID | Example Usage |
+|-------------|-------------|---------------|
+| human       | 9606        | `"organism": "human"` |
+| mouse       | 10090       | `"organism": "mouse"` |
+| rat         | 10116       | `"organism": "rat"` |
+| yeast       | 559292      | `"organism": "yeast"` |
+| e.coli      | 83333       | `"organism": "e.coli"` |
+| drosophila  | 7227        | `"organism": "drosophila"` |
 
+## 🔧 MCP Client Configuration
 
-## API Methods
+### Claude Desktop
 
-### Core Methods
-
-- `method1()`: Description of method1
-- `method2()`: Description of method2
-- `method3()`: Description of method3
-
-### Configuration
-
-The package uses a configuration class for settings:
-
-```python
-from embl-ebi-protein-mcp.main import EMBLEBIProteinmcpConfig, EMBLEBIProteinmcpBridge
-
-config = EMBLEBIProteinmcpConfig(
-    base_url="https://api.example.com",
-    api_key="your_api_key",
-    timeout=30.0
-)
-
-bridge = EMBLEBIProteinmcpBridge(config)
-```
-
-
-## MCP Server Configuration
-
-To use the MCP server with an MCP client, configure it as follows:
+Add to your Claude Desktop configuration:
 
 ```json
 {
   "mcpServers": {
-    "EMBL-EBI-Protein-mcp": {
-      "command": "EMBL-EBI-Protein-mcp-server",
+    "embl-ebi-proteins": {
+      "command": "embl_ebi_protein_mcp",
       "env": {}
     }
   }
 }
 ```
 
-The server will automatically handle:
-- JSON-RPC communication
-- Tool discovery and invocation
-- Error handling and reporting
+### Other MCP Clients
 
+The server follows the standard MCP protocol and should work with any MCP-compatible client.
 
-## Development
-
-### Setup Development Environment
+## 🧪 Testing
 
 ```bash
-# Install in development mode with dev dependencies
-pip install -e .[dev]
+# Test the API functionality
+python test_api.py
 
-# Run tests
-pytest
+# Test enhanced features
+python test_enhancements.py
 
-# Format code
-black embl-ebi-protein-mcp/
-
-# Type checking
-mypy embl-ebi-protein-mcp/
+# Run with debug logging
+DEBUG=1 embl_ebi_protein_mcp
 ```
+
+## 📋 API Endpoints Used
+
+This server accesses the following EMBL-EBI REST API endpoints:
+
+- **Proteins**: `https://www.ebi.ac.uk/proteins/api/proteins`
+- **Features**: `https://www.ebi.ac.uk/proteins/api/features`
+- **Variations**: `https://www.ebi.ac.uk/proteins/api/variation`
+- **Taxonomy**: `https://www.ebi.ac.uk/proteins/api/taxonomy`
+- **Proteomes**: `https://www.ebi.ac.uk/proteins/api/proteomes`
+- **Coordinates**: `https://www.ebi.ac.uk/proteins/api/coordinates`
+- **UniParc**: `https://www.ebi.ac.uk/proteins/api/uniparc`
+
+## 🛠️ Development
 
 ### Project Structure
 
 ```
 EMBL-EBI-Protein-mcp/
-├── pyproject.toml      # Package configuration
-├── README.md          # This file
-├── LICENSE            # MIT License
-├── embl-ebi-protein-mcp/         # Main package
-│   ├── __init__.py    # Package initialization
-│   ├── main.py        # Core functionality
-
-│   └── cli.py         # Command-line interface
-
-
-│   └── mcp_server.py  # MCP server implementation
-
-└── tests/             # Test files
-    ├── __init__.py
-    └── test_main.py   # Tests for main functionality
+├── embl_ebi_protein_mcp/
+│   ├── __init__.py
+│   ├── bridge.py          # API bridge to EMBL-EBI
+│   ├── mcp_server.py      # MCP server implementation
+│   ├── cli.py             # Command-line interface
+│   └── main.py            # Main entry point
+├── test_api.py            # API functionality tests
+├── test_enhancements.py   # Enhanced features tests
+├── ENHANCEMENTS.md        # Enhancement documentation
+└── pyproject.toml         # Package configuration
 ```
 
-## License
+### Development Setup
 
-MIT License - see LICENSE file for details.
+```bash
+# Install with development dependencies
+pip install -e .[dev]
 
-## Contributing
+# Run linting
+black embl_ebi_protein_mcp/
+flake8 embl_ebi_protein_mcp/
+
+# Type checking
+mypy embl_ebi_protein_mcp/
+```
+
+## 🔄 Recent Enhancements
+
+- ✅ Added `get_protein_summary` for comprehensive protein lookup
+- ✅ Added `find_protein_accession` for easy ID lookup
+- ✅ Enhanced all tool descriptions with usage guidance and examples
+- ✅ Added organism name mapping for better usability
+- ✅ Improved error handling and fallback strategies
+- ✅ Added clear workflow guidance for LLMs
+
+See [ENHANCEMENTS.md](ENHANCEMENTS.md) for detailed information.
+
+## ⚠️ Known Limitations
+
+- Some proteins may not have complete data in all endpoints
+- Large result sets may be truncated or timeout
+- The API requires specific UniProt accession formats for some endpoints
+- Rate limiting may apply for high-volume usage
+
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+## 🤝 Contributing
 
 1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Add tests
-5. Run the test suite
-6. Submit a pull request
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-## Support
+## 📞 Support
 
-For issues and questions, please use the GitHub issue tracker. 
+- **Issues**: Use the [GitHub issue tracker](https://github.com/MCPmed/EMBL-EBI-Protein-mcp/issues)
+- **Questions**: Open a discussion on GitHub
+- **API Documentation**: [EMBL-EBI Proteins API](https://www.ebi.ac.uk/proteins/api/)
+
+---
+
+**Note**: This is an unofficial implementation and is not affiliated with EMBL-EBI. All data is accessed through their public REST API.
