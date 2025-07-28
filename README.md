@@ -12,7 +12,7 @@
 
 A Model Context Protocol (MCP) server providing access to the EMBL-EBI Protein database. This server enables LLMs and other MCP clients to search, retrieve, and analyze protein data from UniProt and related databases.
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Installation
 
@@ -36,31 +36,31 @@ embl_ebi_protein_mcp
 
 The server runs on stdio and is ready to accept MCP protocol requests.
 
-## 🧬 Features
+## Features
 
-### 🆕 **New Enhanced Tools** (Recommended)
-- **`get_protein_summary`** ⭐ - One-stop comprehensive protein lookup (BEST STARTING POINT)
-- **`find_protein_accession`** 🔍 - Easy protein ID lookup for common names
+### New Enhanced Tools (Recommended)
+- **`get_protein_summary`** - One-stop comprehensive protein lookup (BEST STARTING POINT)
+- **`find_protein_accession`** - Easy protein ID lookup for common names
 
-### 🔬 **Core Protein Tools**
+### Core Protein Tools
 - **`search_proteins`** - Search UniProt protein database by text query
 - **`get_protein_by_accession`** - Get detailed protein information by UniProt accession
 - **`get_protein_interactions`** - Get known protein-protein interactions
 - **`get_protein_isoforms`** - Get alternative protein isoforms (splice variants)
 
-### 🎯 **Protein Features & Analysis**
+### Protein Features & Analysis
 - **`search_features`** - Search for specific protein sequence features
 - **`get_features_by_accession`** - Get all sequence features for a protein
 - **`get_features_by_type`** - Get features by specific type (domains, sites, etc.)
 - **`search_variations`** - Search natural variants in proteins
 - **`get_variations_by_accession`** - Get variations by UniProt accession
 
-### 🌳 **Taxonomy & Classification**
+### Taxonomy & Classification
 - **`get_taxonomy_by_id`** - Get taxonomic information by NCBI taxonomy ID
 - **`get_taxonomy_lineage`** - Get complete taxonomic lineage
 - **`get_taxonomy_children`** - Get taxonomy children by ID
 
-### 🔬 **Advanced Analysis**
+### Advanced Analysis
 - **`search_proteomes`** - Search proteomes
 - **`get_proteome_by_upid`** - Get proteome by UniProt Proteome ID
 - **`search_coordinates`** - Search genomic coordinates
@@ -68,7 +68,7 @@ The server runs on stdio and is ready to accept MCP protocol requests.
 
 **Total: 30 tools available**
 
-## 💡 Usage Examples
+## Usage Examples
 
 ### For LLMs (via MCP client)
 
@@ -117,7 +117,7 @@ async def example():
 asyncio.run(example())
 ```
 
-## 🗺️ Supported Organisms
+## Supported Organisms
 
 The server includes convenient organism name mapping:
 
@@ -130,7 +130,7 @@ The server includes convenient organism name mapping:
 | e.coli      | 83333       | `"organism": "e.coli"` |
 | drosophila  | 7227        | `"organism": "drosophila"` |
 
-## 🔧 MCP Client Configuration
+## MCP Client Configuration
 
 ### Claude Desktop
 
@@ -151,7 +151,7 @@ Add to your Claude Desktop configuration:
 
 The server follows the standard MCP protocol and should work with any MCP-compatible client.
 
-## 🧪 Testing
+## Testing
 
 ```bash
 # Test the API functionality
@@ -164,7 +164,7 @@ python test_enhancements.py
 DEBUG=1 embl_ebi_protein_mcp
 ```
 
-## 📋 API Endpoints Used
+## API Endpoints Used
 
 This server accesses the following EMBL-EBI REST API endpoints:
 
@@ -176,7 +176,7 @@ This server accesses the following EMBL-EBI REST API endpoints:
 - **Coordinates**: `https://www.ebi.ac.uk/proteins/api/coordinates`
 - **UniParc**: `https://www.ebi.ac.uk/proteins/api/uniparc`
 
-## 🛠️ Development
+## Development
 
 ### Project Structure
 
@@ -208,29 +208,29 @@ flake8 embl_ebi_protein_mcp/
 mypy embl_ebi_protein_mcp/
 ```
 
-## 🔄 Recent Enhancements
+## Recent Enhancements
 
-- ✅ Added `get_protein_summary` for comprehensive protein lookup
-- ✅ Added `find_protein_accession` for easy ID lookup
-- ✅ Enhanced all tool descriptions with usage guidance and examples
-- ✅ Added organism name mapping for better usability
-- ✅ Improved error handling and fallback strategies
-- ✅ Added clear workflow guidance for LLMs
+- Added `get_protein_summary` for comprehensive protein lookup
+- Added `find_protein_accession` for easy ID lookup
+- Enhanced all tool descriptions with usage guidance and examples
+- Added organism name mapping for better usability
+- Improved error handling and fallback strategies
+- Added clear workflow guidance for LLMs
 
 See [ENHANCEMENTS.md](ENHANCEMENTS.md) for detailed information.
 
-## ⚠️ Known Limitations
+## Known Limitations
 
 - Some proteins may not have complete data in all endpoints
 - Large result sets may be truncated or timeout
 - The API requires specific UniProt accession formats for some endpoints
 - Rate limiting may apply for high-volume usage
 
-## 📄 License
+## License
 
 MIT License - see [LICENSE](LICENSE) file for details.
 
-## 🤝 Contributing
+## Contributing
 
 1. Fork the repository
 2. Create a feature branch (`git checkout -b feature/amazing-feature`)
@@ -238,7 +238,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
 
-## 📞 Support
+## Support
 
 - **Issues**: Use the [GitHub issue tracker](https://github.com/MCPmed/EMBL-EBI-Protein-mcp/issues)
 - **Questions**: Open a discussion on GitHub
