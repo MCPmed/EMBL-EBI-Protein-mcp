@@ -1,12 +1,4 @@
-# Configuration files
-*.json
-*.txt
-*.csv
-*.tsv
-*.fasta
-*.fastq
-*.fq
-
+*.claude/*
 # Python
 __pycache__/
 *.py[cod]
@@ -54,54 +46,29 @@ coverage.xml
 .pytest_cache/
 cover/
 
-# Virtual environments
-.env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
+# Translations
+*.mo
+*.pot
 
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
-
-# macOS
-.DS_Store
-.AppleDouble
-.LSOverride
-
-# Windows
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-
-# Logs
+# Django stuff:
 *.log
-logs/
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
 
-# Temporary files
-*.tmp
-*.temp
-.cursor*
+# Flask stuff:
+instance/
+.webassets-cache
 
-# Claude files
-.claude*
+# Scrapy stuff:
+.scrapy
 
-# Mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
+# Sphinx documentation
+docs/_build/
 
-# Ruff
-.ruff_cache/
-
-# Black
-.black_cache/
+# PyBuilder
+.pybuilder/
+target/
 
 # Jupyter Notebook
 .ipynb_checkpoints
@@ -125,12 +92,21 @@ poetry.lock
 # PEP 582
 __pypackages__/
 
-# Celery
+# Celery stuff
 celerybeat-schedule
 celerybeat.pid
 
 # SageMath parsed files
 *.sage.py
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
 
 # Spyder project settings
 .spyderproject
@@ -142,6 +118,11 @@ celerybeat.pid
 # mkdocs documentation
 /site
 
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
 # Pyre type checker
 .pyre/
 
@@ -149,4 +130,17 @@ celerybeat.pid
 .pytype/
 
 # Cython debug symbols
-cython_debug/ 
+cython_debug/
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# macOS
+.DS_Store
+
+# Test artifacts
+test_*.py
+debug_*.py

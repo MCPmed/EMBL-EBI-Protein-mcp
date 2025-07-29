@@ -153,13 +153,43 @@ The server follows the standard MCP protocol and should work with any MCP-compat
 
 ## Testing
 
+The project uses pytest for comprehensive testing with unit tests, integration tests, and code coverage.
+
+### Quick Testing
+
 ```bash
-# Test the API functionality
-python test_api.py
+# Run all tests
+pytest
 
-# Test enhanced features
-python test_enhancements.py
+# Run with coverage
+pytest --cov=embl_ebi_protein_mcp
 
+# Run only unit tests (fast)
+pytest -m unit
+
+# Run only integration tests
+pytest -m integration
+```
+
+### Using Test Scripts
+
+```bash
+# Run comprehensive test suite with coverage
+./scripts/test.sh
+
+# Run code quality checks (black, flake8, mypy)
+./scripts/lint.sh
+```
+
+### Test Categories
+
+- **Unit tests** (`-m unit`): Fast tests with mocked dependencies
+- **Integration tests** (`-m integration`): Tests with mocked API calls  
+- **Slow tests** (`-m slow`): Comprehensive workflow tests
+
+### Debug Mode
+
+```bash
 # Run with debug logging
 DEBUG=1 embl_ebi_protein_mcp
 ```
@@ -200,9 +230,14 @@ EMBL-EBI-Protein-mcp/
 # Install with development dependencies
 pip install -e .[dev]
 
-# Run linting
-black embl_ebi_protein_mcp/
-flake8 embl_ebi_protein_mcp/
+# Run tests
+pytest
+
+# Run code quality checks
+./scripts/lint.sh
+
+# Format code
+black embl_ebi_protein_mcp/ tests/
 
 # Type checking
 mypy embl_ebi_protein_mcp/
